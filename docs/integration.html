@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Feedback Kit — Integration Map</title>
+  <style>
+    :root{font-family:Inter,system-ui,sans-serif;color:#27232d;background:#f5f2f7}
+    *{box-sizing:border-box}body{margin:0;padding:48px 24px}
+    main{max-width:980px;margin:auto}header{margin-bottom:34px}
+    .eyebrow{color:#745eea;font-size:11px;font-weight:800;letter-spacing:.15em}
+    h1{font-size:42px;letter-spacing:-.05em;margin:8px 0 12px}
+    header p{color:#77717e;line-height:1.6;max-width:670px}
+    .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:stretch}
+    .card{background:#fff;border:1px solid #e6e1e9;border-radius:18px;padding:22px;min-height:240px;box-shadow:0 12px 40px #33273c0c}
+    .card b{display:flex;width:34px;height:34px;border-radius:10px;background:#eeeaff;color:#705ae7;align-items:center;justify-content:center}
+    h2{font-size:18px;margin:18px 0 10px}.card p,.card li{color:#77717e;font-size:13px;line-height:1.55}
+    ul{padding-left:18px}
+    .decision{background:#26222c;color:#fff;border-radius:18px;margin-top:24px;padding:24px 28px;display:flex;gap:28px;align-items:center}
+    .decision strong{font-size:18px}.decision span{color:#bcb5c2;font-size:13px;line-height:1.5}
+    @media(max-width:900px){.flow{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.flow{grid-template-columns:1fr}.decision{align-items:flex-start;flex-direction:column}h1{font-size:34px}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">FEEDBACK KIT · V0.1</div>
+    <h1>One small UI, complete bug context.</h1>
+    <p>The host app decides what state is useful. The kit captures and sanitizes it, an optional agent scopes the issue through a short conversation, and a server-only adapter creates the Linear ticket.</p>
+  </header>
+  <section class="flow">
+    <article class="card"><b>1</b><h2>Drop in the widget</h2><ul><li>Floating feedback trigger</li><li>Automatic screenshot</li><li>Multi-element picker</li><li>Paste or upload images</li></ul></article>
+    <article class="card"><b>2</b><h2>Capture app context</h2><ul><li>App-owned <code>getState()</code></li><li>Two-pass secret redaction</li><li>Route, browser, viewport</li><li>Version and environment</li></ul></article>
+    <article class="card"><b>3</b><h2>Scope with an agent</h2><ul><li>One question at a time</li><li>Reproduction steps</li><li>Acceptance criteria</li><li>Uncertainty preserved</li></ul></article>
+    <article class="card"><b>4</b><h2>Create the ticket</h2><ul><li>Server-only credentials</li><li>Private screenshot upload</li><li>Structured Linear issue</li><li>Conversation attached</li></ul></article>
+  </section>
+  <section class="decision">
+    <strong>Portable by design</strong>
+    <span>The report, scoper, and submission contracts are framework-neutral. React and OpenAI are adapters, not permanent dependencies; another UI, model provider, or ticket system can implement the same boundaries.</span>
+  </section>
+</main>
+</body>
+</html>

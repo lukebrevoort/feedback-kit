@@ -1,0 +1,24 @@
+{
+  "name": "@feedback-kit/demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@feedback-kit/core": "workspace:*",
+    "@feedback-kit/react": "workspace:*",
+    "@vitejs/plugin-react": "^6.0.4",
+    "vite": "^8.1.5",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  }
+}

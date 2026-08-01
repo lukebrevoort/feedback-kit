@@ -1,0 +1,36 @@
+{
+  "name": "@feedback-kit/react",
+  "version": "0.1.0",
+  "description": "Drop-in React feedback widget with screenshot, app state, and element capture.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/index.css"
+  },
+  "files": ["dist"],
+  "sideEffects": ["*.css"],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean --external react",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@feedback-kit/core": "workspace:*",
+    "html2canvas": "^1.4.1"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "react": "^19.2.8",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  }
+}
