@@ -72,6 +72,21 @@ pnpm dev
 
 The demo runs at `http://127.0.0.1:4173`.
 
+## Hosted demo deployment
+
+The repository now includes a two-target deployment path:
+
+- `vercel.json` builds the interactive Vite demo in `apps/demo`.
+- `railway.toml` builds and starts the deployment API in `apps/api`.
+- [`docs/deployment.html`](./docs/deployment.html) is the visual deployment map
+  and environment checklist.
+
+Deploy Railway first, set `VITE_FEEDBACK_API_URL` in Vercel to the Railway
+public URL, and set Railway's `ALLOWED_ORIGINS` to the Vercel origin. The API
+runs with deterministic demo adapters by default. Add `OPENAI_API_KEY` for live
+agent scoping and both `LINEAR_API_KEY` and `LINEAR_TEAM_ID` for real issue
+creation. `GET /health` reports which optional integrations are active.
+
 ## Minimal React integration
 
 Install `@feedback-kit/core` and `@feedback-kit/react` in the consuming app.

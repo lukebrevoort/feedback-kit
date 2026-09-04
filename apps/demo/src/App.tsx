@@ -3,8 +3,11 @@ import type {
   FeedbackScoper,
   FeedbackSubmissionResult,
 } from "@feedback-kit/core";
+import { createRemoteFeedbackScoper } from "@feedback-kit/agent/browser";
 import { FeedbackWidget } from "@feedback-kit/react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+const feedbackApiUrl = import.meta.env.VITE_FEEDBACK_API_URL?.replace(/\/$/, "");
 
 const initialTasks = [
   { id: "tsk-1", title: "Review onboarding flow", done: true, tag: "Product" },
@@ -16,6 +19,29 @@ export function App() {
   const [tasks, setTasks] = useState(initialTasks);
   const [filter, setFilter] = useState<"all" | "open">("all");
   const [lastReport, setLastReport] = useState<FeedbackReport>();
+  const [apiStatus, setApiStatus] = useState<
+    "local" | "checking" | "connected" | "unavailable"
+  >(feedbackApiUrl ? "checking" : "local");
+  const remoteScoper = useMemo(
+    () =>
+      feedbackApiUrl
+        ? createRemoteFeedbackScoper({
+            endpoint: `${feedbackApiUrl}/api/feedback/scope`,
+          })
+        : undefined,
+    [],
+  );
+
+  useEffect(() => {
+    if (!feedbackApiUrl) return;
+    const controller = new AbortController();
+    void fetch(`${feedbackApiUrl}/health`, { signal: controller.signal })
+      .then((response) => {
+        setApiStatus(response.ok ? "connected" : "unavailable");
+      })
+      .catch(() => setApiStatus("unavailable"));
+    return () => controller.abort();
+  }, []);
 
   const visibleTasks =
     filter === "open" ? tasks.filter((task) => !task.done) : tasks;
@@ -23,6 +49,23 @@ export function App() {
   const submitDemoFeedback = async (
     report: FeedbackReport,
   ): Promise<FeedbackSubmissionResult> => {
+    if (feedbackApiUrl) {
+      const response = await fetch(`${feedbackApiUrl}/api/feedback`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(report),
+      });
+      const body = (await response.json().catch(() => ({}))) as {
+        error?: string;
+        result?: FeedbackSubmissionResult;
+      };
+      if (!response.ok || !body.result) {
+        throw new Error(body.error ?? `Feedback request failed (${response.status}).`);
+      }
+      setLastReport(report);
+      return body.result;
+    }
+
     await new Promise((resolve) => window.setTimeout(resolve, 650));
     setLastReport(report);
     return {
@@ -34,6 +77,7 @@ export function App() {
   };
 
   const scopeDemoFeedback: FeedbackScoper = async (report, messages) => {
+    if (remoteScoper) return remoteScoper(report, messages);
     await new Promise((resolve) => window.setTimeout(resolve, 550));
     const userReplies = messages.filter((message) => message.role === "user");
     if (userReplies.length === 0) {
@@ -95,6 +139,16 @@ export function App() {
         <div className="demo-sidebar-note">
           <span>DEMO MODE</span>
           <p>Try reporting any part of this interface.</p>
+          <small className={`demo-api-status is-${apiStatus}`}>
+            <i />
+            {apiStatus === "connected"
+              ? "Hosted API connected"
+              : apiStatus === "checking"
+                ? "Checking hosted API"
+                : apiStatus === "unavailable"
+                  ? "Hosted API unavailable"
+                  : "Local simulation"}
+          </small>
         </div>
         <div className="demo-person">
           <span>LB</span>
@@ -231,7 +285,11 @@ export function App() {
           sessionToken: "this-will-be-redacted",
           featureFlags: { focusTimer: true, quickCapture: true },
         })}
-        metadata={{ demo: true, build: "local" }}
+        metadata={{
+          demo: true,
+          build: import.meta.env.PROD ? "hosted" : "local",
+          apiStatus,
+        }}
         project={{
           id: "focusboard-demo",
           name: "Focusboard",

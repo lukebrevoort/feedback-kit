@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@feedback-kit/agent": "workspace:*",
     "@feedback-kit/core": "workspace:*",
     "@feedback-kit/react": "workspace:*",
     "@vitejs/plugin-react": "^6.0.4",

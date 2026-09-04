@@ -5,7 +5,11 @@
     "moduleResolution": "Bundler",
     "paths": {
       "@feedback-kit/core": ["./packages/core/src/index.ts"],
-      "@feedback-kit/react": ["./packages/react/src/index.ts"]
+      "@feedback-kit/react": ["./packages/react/src/index.ts"],
+      "@feedback-kit/agent": ["./packages/agent/src/index.ts"],
+      "@feedback-kit/agent/browser": ["./packages/agent/src/browser.ts"],
+      "@feedback-kit/agent/server": ["./packages/agent/src/server.ts"],
+      "@feedback-kit/linear": ["./packages/linear/src/index.ts"]
     },
     "strict": true,
     "skipLibCheck": true,

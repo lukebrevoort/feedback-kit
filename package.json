@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "packageManager": "pnpm@10.28.2",
   "scripts": {
-    "build": "pnpm --filter @feedback-kit/core build && pnpm --filter @feedback-kit/react build && pnpm --filter @feedback-kit/agent build && pnpm --filter @feedback-kit/linear build && pnpm --filter @feedback-kit/demo build",
+    "build": "pnpm --filter @feedback-kit/core build && pnpm --filter @feedback-kit/react build && pnpm --filter @feedback-kit/agent build && pnpm --filter @feedback-kit/linear build && pnpm --filter @feedback-kit/api build && pnpm --filter @feedback-kit/demo build",
     "dev": "pnpm --filter @feedback-kit/demo dev",
     "test": "pnpm -r --if-present test",
     "typecheck": "pnpm -r --if-present typecheck"

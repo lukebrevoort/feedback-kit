@@ -127,6 +127,40 @@ button {
   margin: 7px 0 0;
 }
 
+.demo-api-status {
+  align-items: center;
+  color: #8f8994;
+  display: flex;
+  font-size: 9px;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.demo-api-status i {
+  background: #8f8994;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgb(143 137 148 / 12%);
+  height: 6px;
+  width: 6px;
+}
+
+.demo-api-status.is-connected {
+  color: #7fc9a1;
+}
+
+.demo-api-status.is-connected i {
+  background: #62c08e;
+  box-shadow: 0 0 0 3px rgb(98 192 142 / 14%);
+}
+
+.demo-api-status.is-unavailable {
+  color: #e9a88e;
+}
+
+.demo-api-status.is-unavailable i {
+  background: #df8968;
+}
+
 .demo-person {
   align-items: center;
   border-top: 1px solid #36313c;
